@@ -11,7 +11,7 @@ class ReportStatusCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'report-order';
 
     /**
      * The console command description.
