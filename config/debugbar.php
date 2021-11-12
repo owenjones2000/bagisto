@@ -150,6 +150,7 @@ return [
             'backtrace'         => true,   // Use a backtrace to find the origin of the query in your files.
             'backtrace_exclude_paths' => [],   // Paths to exclude from backtrace. (in addition to defaults)
             'timeline'          => false,  // Add the queries to the timeline
+            'duration_background'  => true,   // Show shaded background on each query relative to how long it took to execute.
             'explain' => [                 // Show EXPLAIN output on queries
                 'enabled' => false,
                 'types' => ['SELECT'],     // Deprecated setting, is always only SELECT
@@ -161,6 +162,7 @@ return [
             'full_log' => false,
         ],
         'views' => [
+            'timeline' => false,  // Add the views to the timeline (Experimental)
             'data' => false,    //Note: Can slow down the application, because the data can be quite large..
         ],
         'route' => [
