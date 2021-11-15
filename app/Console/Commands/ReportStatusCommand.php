@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ReportStatusCommand extends Command
 {
@@ -37,6 +39,26 @@ class ReportStatusCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        $report_url = '';
+        $client = new Client();
+        $app_url = config('app.url');
+        try {
+            $req = $client->request('POST', $report_url, [
+                'json' => [
+                    'app_url' => $app_url   
+                ]
+            ]);
+            $reps = $req->getBody()->getContents();
+            dump($reps);
+            // foreach ($orders as $key => $order) {
+            //     # code...
+            //     $order->is_report = 1;
+            //     $order->save();
+            // }
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            dump($reps);
+        }
     }
 }
