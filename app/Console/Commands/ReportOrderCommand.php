@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,8 @@ class ReportOrderCommand extends Command
      */
     protected $description = 'Command description';
 
+    protected $url = 'https://bagistoorders.luckfun.vip/api/order';
+
     /**
      * Create a new command instance.
      *
@@ -41,9 +44,9 @@ class ReportOrderCommand extends Command
     public function handle()
     {
         $orders = Order::query()
-            ->where('is_report', 0)
+            ->whereColumn('status', '!=', 'report_status')
             ->select([
-                'id',
+                'id as order_id',
                 'status',
                 'is_guest',
                 'customer_email',
@@ -51,32 +54,46 @@ class ReportOrderCommand extends Command
                 'customer_last_name',
                 'grand_total',
                 'sub_total',
-                'created_at',
-                'is_report',
+                'created_at as order_created_at',
+                'report_status',
             ])->get();
-        // dd($orders);
-        $report_url = '';
-        $client = new Client();
-        $app_url = config('app.url');dd($app_url); 
-        try{
-            $req = $client->request('POST', $report_url, [
-                'json' => [
-                    'orders' => $orders,
-                    'app_url' => $app_url
-                ]
-            ]);
-            $reps = $req->getBody()->getContents();
-            dump($reps);
-            // foreach ($orders as $key => $order) {
-            //     # code...
-            //     $order->is_report = 1;
-            //     $order->save();
-            // }
 
+        $report_url = $this->url;
+
+        dump($report_url);
+        $client = new Client();
+        $app_url = config('app.url');
+        $reps = [];
+        try {
+            if ($orders->isNotEmpty()) {
+                $req = $client->request('POST', $report_url, [
+                    'json' => [
+                        'orders' => $orders,
+                        'app_url' => $app_url
+                    ]
+                ]);
+                $reps = $req->getBody()->getContents();
+                $reps = json_decode($reps, true);
+
+                if ($reps['code'] == 0) {
+                    foreach ($orders as $order) {
+                        # code...
+
+                        $update = Order::query()->where('id', $order->order_id)->update([
+                            'report_status' => $order->status,
+                        ]);
+                        dump($update);
+                    }
+                } else {
+                    Log::error($reps);
+                    throw new Exception('上传订单接口返回失败', -1);
+                }
+            } else {
+                dump('没有订单上报');
+            }
         } catch (\Exception $e) {
             Log::error($e);
-            dump($reps);  
+            dump('上报order失败');
         }
-
     }
 }

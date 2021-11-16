@@ -13,7 +13,7 @@ class ReportStatusCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'report-order';
+    protected $signature = 'report-status';
 
     /**
      * The console command description.
@@ -39,23 +39,21 @@ class ReportStatusCommand extends Command
      */
     public function handle()
     {
-        $report_url = '';
+        $report_url = 'https://bagistoorders.luckfun.vip/api/shop';
         $client = new Client();
         $app_url = config('app.url');
+        $app_name = config('app.name');
+   
         try {
             $req = $client->request('POST', $report_url, [
                 'json' => [
-                    'app_url' => $app_url   
+                    'url' => $app_url,
+                    'name' => $app_name   
                 ]
             ]);
             $reps = $req->getBody()->getContents();
             dump($reps);
-            // foreach ($orders as $key => $order) {
-            //     # code...
-            //     $order->is_report = 1;
-            //     $order->save();
-            // }
-
+            
         } catch (\Exception $e) {
             Log::error($e);
             dump($reps);

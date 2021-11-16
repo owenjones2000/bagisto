@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ReportOrderCommand;
+use App\Console\Commands\ReportStatusCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +27,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('booking:cron')->dailyAt('3:00');
+        $schedule->command(ReportOrderCommand::class)->runInBackground()->everyMinute();
+        $schedule->command(ReportStatusCommand::class)->runInBackground()->everyFourMinutes();
     }
 
     /**
