@@ -7,6 +7,6 @@ return [
         'description' => 'Stripe',
         'class'       => 'Wudi\Stripe\Payment\Stripe',
         'active'      => true,
-        'sort'        => 1,
+        'sort'        => 8,
     ],
 ];

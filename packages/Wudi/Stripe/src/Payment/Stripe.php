@@ -15,6 +15,7 @@ class Stripe extends Payment
 
     public function getRedirectUrl()
     {
-        
+        // return route('stripe.process');
+        return route('stripe.payview');
     }
 }

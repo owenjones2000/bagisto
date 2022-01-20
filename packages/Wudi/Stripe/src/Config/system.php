@@ -4,7 +4,7 @@ return [
     [
         'key'    => 'sales.paymentmethods.stripe',
         'name'   => 'Stripe',
-        'sort'   => 1,
+        'sort'   => 8,
         'fields' => [
             [
                 'name'          => 'title',
@@ -26,7 +26,23 @@ return [
                 'validation'    => 'required',
                 'channel_based' => false,
                 'locale_based'  => true,
-            ]
+            ],
+            [
+                'name'          => 'stripe_api_key',
+                'title'         => 'admin::app.admin.system.stripe-apikey',
+                'type'          => 'text',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ],
+            [
+                'name'          => 'stripe_pb_key',
+                'title'         => 'admin::app.admin.system.stripe-pbkey',
+                'type'          => 'text',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ],
         ]
     ]
 ];

@@ -1,5 +1,7 @@
 <?php
 
+use Wudi\Stripe\Providers\StripeServiceProvider;
+
 return [
 
     /*
@@ -284,7 +286,8 @@ return [
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
 
         // Stripe provider
-        Wontonee\Stripe\Providers\StripeServiceProvider::class,
+        // Wontonee\Stripe\Providers\StripeServiceProvider::class,
+        StripeServiceProvider::class,
     ],
 
     /*
