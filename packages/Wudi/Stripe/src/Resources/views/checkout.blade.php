@@ -593,13 +593,13 @@
 
             messageContainer.classList.remove("hidden");
             messageContainer.textContent = messageText;
-
+            if (url) {
+                    location.href = url;
+                }
             setTimeout(function () {
                 messageContainer.classList.add("hidden");
                 messageText.textContent = "";
-                if (url) {
-                    location.href = url;
-                }
+                
             }, 3000);
         }
 

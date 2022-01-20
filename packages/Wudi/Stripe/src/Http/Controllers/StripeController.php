@@ -96,7 +96,7 @@ class StripeController extends Controller
         'enabled' => true,
       ],
     ]);
-    
+    Log::info($paymentIntent);
     $output = [
       'clientSecret' => $paymentIntent->client_secret,
     ];
