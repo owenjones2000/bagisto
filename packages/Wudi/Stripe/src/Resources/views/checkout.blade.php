@@ -237,7 +237,7 @@
         }
 
         .divider-text {
-            font-size: 12px;
+            font-size: 1rem;
             color: #999;
             vertical-align: middle;
         }
@@ -255,7 +255,7 @@
             text-align: center;
             height: 50px;
             color: #fff;
-            border-radius: 10px;
+            border-radius: .5rem;
             line-height: 50px;
             font-weight: 700;
         }
@@ -263,12 +263,13 @@
         .tips-text {
             margin: 1rem 0;
             color: #ccc;
-            font-size: 12px;
+            font-size: 1rem;
             border-top: solid 1px #EEE;
+            word-break: break-all;
         }
 
         .powered-text {
-            font-size: 16px;
+            font-size: 1.25rem;
             text-align: center;
             color: #ccc
         }
@@ -289,7 +290,7 @@
                         </div>
                         <div class="payment-method-title"> Credit card</div>
                     </div>
-                    <!-- 历史支付卡片记录 -->
+                    <!-- history cards -->
                     <!--
                     <div class="history-cards hidden">
                         <div class="history-card history-card-checked">
@@ -542,7 +543,6 @@
                 setup_future_usage: 'off_session'
             }).then(function (res) {
                 if (res.error) {
-                    console.log(res);
                     showMessage(res.error.message);
                 } else {
                     if (res.paymentIntent.status === 'succeeded') {
@@ -599,7 +599,6 @@
             setTimeout(function () {
                 messageContainer.classList.add("hidden");
                 messageText.textContent = "";
-                
             }, 3000);
         }
 
